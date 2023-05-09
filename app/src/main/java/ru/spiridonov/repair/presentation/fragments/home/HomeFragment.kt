@@ -7,6 +7,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import ru.spiridonov.repair.databinding.FragmentHomeBinding
+import ru.spiridonov.repair.domain.Repair
+import ru.spiridonov.repair.presentation.adapters.RepairItemAdapter
 
 class HomeFragment : Fragment() {
 
@@ -16,7 +18,8 @@ class HomeFragment : Fragment() {
 
 
     private lateinit var viewModel: HomeViewModel
-
+    private lateinit var repairItemAdapter: RepairItemAdapter
+    private var repairList = emptyList<Repair>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -30,6 +33,16 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProvider(this)[HomeViewModel::class.java]
+        repairList = viewModel.repairsList
+        repairItemAdapter = RepairItemAdapter()
+        setupRecyclerView()
+    }
+
+    private fun setupRecyclerView() {
+        repairItemAdapter.submitList(repairList)
+        binding.rvRepairList.adapter = repairItemAdapter
+        repairItemAdapter.onItemClickListener = {
+        }
     }
 
 

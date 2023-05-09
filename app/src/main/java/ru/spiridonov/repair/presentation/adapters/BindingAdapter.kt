@@ -1,4 +1,4 @@
-package ru.spiridonov.repair.presentation
+package ru.spiridonov.repair.presentation.adapters
 
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
@@ -15,4 +15,9 @@ fun bindErrorInput(textInputLayout: TextInputLayout, isError: Boolean) {
 @BindingAdapter("welcomeUser")
 fun textWelcomeUser(textView: TextView, text: String?) {
     textView.text = String.format(textView.context.resources.getString(R.string.welcome), text)
+}
+
+@BindingAdapter("setPrice")
+fun textSetPrice(textView: TextView, text: Int) {
+    textView.text = String.format(textView.context.resources.getString(R.string.price), text)
 }
