@@ -7,6 +7,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import ru.spiridonov.repair.databinding.FragmentDashboardBinding
+import ru.spiridonov.repair.domain.Work
+import ru.spiridonov.repair.presentation.adapters.WorkItemAdapter
 
 class DashboardFragment : Fragment() {
 
@@ -16,7 +18,8 @@ class DashboardFragment : Fragment() {
 
 
     private lateinit var viewModel: DashboardViewModel
-
+    private lateinit var workItemAdapter: WorkItemAdapter
+    private var userWorkList = emptyList<Work>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -30,6 +33,16 @@ class DashboardFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProvider(this)[DashboardViewModel::class.java]
+        userWorkList = viewModel.userWorkList
+        workItemAdapter = WorkItemAdapter()
+        setupRecyclerView()
+    }
+
+    private fun setupRecyclerView() {
+        workItemAdapter.submitList(userWorkList)
+        binding.rvWorkList.adapter = workItemAdapter
+        workItemAdapter.onItemClickListener = {
+        }
     }
 
     override fun onDestroyView() {

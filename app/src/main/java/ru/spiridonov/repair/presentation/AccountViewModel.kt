@@ -3,6 +3,10 @@ package ru.spiridonov.repair.presentation
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import ru.spiridonov.repair.domain.User
 import ru.spiridonov.repair.utils.SharedPref
 
@@ -25,16 +29,19 @@ class AccountViewModel : ViewModel() {
 
     fun login(email: String, password: String) {
         if (validateInput(email, password)) {
-            val user = User(
-                user_id = "1",
-                email = email,
-                passwordHash = password,
-                username = "ivan",
-                dateCreated = "2021-10-10",
-                accessToken = "123"
-            )
-            SharedPref.saveUser(user)
-            _user.value = user
+            CoroutineScope(Dispatchers.IO).launch {
+                val user = User(
+                    user_id = "1",
+                    email = email,
+                    passwordHash = password,
+                    username = "ivan",
+                    dateCreated = "2021-10-10",
+                    accessToken = "123"
+                )
+                SharedPref.saveUser(user)
+                delay(1000)
+                _user.postValue(user)
+            }
         }
     }
 

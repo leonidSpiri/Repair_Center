@@ -4,7 +4,7 @@ import ru.spiridonov.repair.domain.Work
 import ru.spiridonov.repair.domain.WorkStage
 
 object WorkApi {
-    val works = arrayOf(
+    val works = listOf(
         Work(
             1,
             "Замена экрана на смартфоне",
@@ -53,7 +53,7 @@ object WorkApi {
             "https://example.com/images/glass-replacement.jpg",
             "Смартфоны",
             WorkStage.COMPLETED,
-            false
+            true
         ),
         Work(
             6,
@@ -63,7 +63,7 @@ object WorkApi {
             "https://example.com/images/hard-drive-repair.jpg",
             "Ноутбуки",
             WorkStage.DELIVERY,
-            true
+            false
         ),
         Work(
             7,
@@ -73,7 +73,7 @@ object WorkApi {
             "https://example.com/images/camera-replacement.jpg",
             "Смартфоны",
             WorkStage.COMPLETED,
-            false
+            true
         ),
         Work(
             8,

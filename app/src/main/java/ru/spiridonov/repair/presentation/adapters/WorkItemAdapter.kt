@@ -7,7 +7,9 @@ import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.ListAdapter
 import ru.spiridonov.repair.R
 import ru.spiridonov.repair.databinding.EachWorkItemBinding
+import ru.spiridonov.repair.databinding.EachWorkItemFinishedBinding
 import ru.spiridonov.repair.domain.Work
+import ru.spiridonov.repair.domain.WorkStage
 
 class WorkItemAdapter :
     ListAdapter<Work, WorkItemViewHolder>(WorkItemDiffCallback) {
@@ -17,6 +19,7 @@ class WorkItemAdapter :
         val layoutID =
             when (viewType) {
                 WORK_ITEM -> R.layout.each_work_item
+                FINISHED_WORK_ITEM -> R.layout.each_work_item_finished
                 else -> throw RuntimeException("Unknown view type: $viewType")
             }
         val binding = DataBindingUtil.inflate<ViewDataBinding>(
@@ -29,7 +32,8 @@ class WorkItemAdapter :
     }
 
     override fun getItemViewType(position: Int) =
-        WORK_ITEM
+        if (getItem(position).workStage == WorkStage.COMPLETED) FINISHED_WORK_ITEM
+        else WORK_ITEM
 
 
     override fun onBindViewHolder(holder: WorkItemViewHolder, position: Int) {
@@ -37,6 +41,10 @@ class WorkItemAdapter :
         with(holder.binding) {
             when (this) {
                 is EachWorkItemBinding -> {
+                    workItem = item
+                }
+
+                is EachWorkItemFinishedBinding -> {
                     workItem = item
                 }
             }
@@ -49,5 +57,6 @@ class WorkItemAdapter :
 
     companion object {
         private const val WORK_ITEM = 0
+        private const val FINISHED_WORK_ITEM = 1
     }
 }

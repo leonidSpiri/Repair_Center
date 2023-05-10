@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModelProvider
 import ru.spiridonov.repair.databinding.FragmentHomeBinding
 import ru.spiridonov.repair.domain.Repair
 import ru.spiridonov.repair.presentation.adapters.RepairItemAdapter
+import ru.spiridonov.repair.utils.ShowAlert
 
 class HomeFragment : Fragment() {
 
@@ -42,6 +43,7 @@ class HomeFragment : Fragment() {
         repairItemAdapter.submitList(repairList)
         binding.rvRepairList.adapter = repairItemAdapter
         repairItemAdapter.onItemClickListener = {
+            ShowAlert(requireActivity(), "С вами свяжется наш менеджер!")
         }
     }
 
